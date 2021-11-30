@@ -1,0 +1,45 @@
+<html>
+	<body>
+		<picture>
+			<img src="talk-1/0.png" style="width:100%; height:100%;" id="pictureBox" onclick="openFullscreen()">
+		<picture>
+		<body>
+<html>
+
+<script>
+var laststate = 0;
+  
+window.setInterval(function() {
+	var stateFile = new XMLHttpRequest();
+	stateFile.open("GET", "admin/state.txt?t="+Date.now(), false);
+	stateFile.onreadystatechange = function () {
+		if(stateFile.readyState === 4) {
+			if(stateFile.status === 200) {
+				var allText = stateFile.responseText;
+				console.log(allText);
+				if (allText!=laststate) {
+					console.log("State changed!")
+					document.getElementById("pictureBox").src = "talk-1/"+allText+".png";
+					laststate = allText;
+				}
+			}
+		}
+	}
+	stateFile.send(null);
+}, 1000);
+
+function openFullscreen() {
+	var doc = document.documentElement;
+	if (doc.requestFullscreen) {
+		doc.requestFullscreen();
+	} else if (doc.webkitRequestFullscreen) { /* Safari */
+		doc.webkitRequestFullscreen();
+	} else if (doc.msRequestFullscreen) { /* IE11 */
+		doc.msRequestFullscreen();
+	}
+}
+
+function checkState() {
+
+}
+</script>
